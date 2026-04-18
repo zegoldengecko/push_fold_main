@@ -30,6 +30,7 @@ class _DrillScreenState extends State<DrillScreen> {
   void submitAnswer(bool pushed, DrillSpot spot) {
     if (pushed && shouldShove(spot) || !pushed && !shouldShove(spot)) {
       print('Correctly acted in spot ${spot.position} ${spot.stack} ${spot.hand}. They pushed: $pushed');
+      removeFailure(spot);
     } else if (pushed && !shouldShove(spot) || !pushed && shouldShove(spot)) {
       print('Incorrectly acted in spot ${spot.position} ${spot.stack} ${spot.hand}. They pushed: $pushed');
       recordFailure(spot);

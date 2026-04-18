@@ -20,4 +20,18 @@ void recordFailure(DrillSpot spot) {
   }
 }
 
+void removeFailure(DrillSpot spot) {
+  final storageString = '${spot.position}_${spot.stack}_${spot.hand}';
+
+  if (failureDB.containsKey(storageString)) {
+    final record = failureDB[storageString]!;
+
+    if (record.weight <= 1) {
+      failureDB.remove(storageString);
+    } else {
+      record.weight -= 1;
+    }
+  }
+}
+
 Map<String, FailureRecord> failureDB = {};
