@@ -41,6 +41,10 @@ String _randomhand(Random rand) {
 }
 
 DrillSpot useChallengingHand(Random rand) {
+  if (failureDB.isEmpty) {
+    return generateRandomSpot();
+  }
+
   final List<String> weightedKeys = [];
 
   // Adding to weighted keys depending on weight
@@ -48,6 +52,10 @@ DrillSpot useChallengingHand(Random rand) {
     for (int i = 0; i < entry.weight; i++) {
       weightedKeys.add(entry.key);
     }
+  }
+
+  if (weightedKeys.isEmpty) {
+    return generateRandomSpot();
   }
 
   // Picking a random key
