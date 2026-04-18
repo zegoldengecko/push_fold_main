@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:push_fold_main/models/drill_spot.dart';
 import '../data/common_failures.dart';
 
-final _positions = ['SB', 'BB', 'UTG', 'UTG+1', 'UTG+2', 'UTG+3', 'LJ', 'HJ', 'CO', 'BTN'];
+final _positions = ['SB', 'UTG', 'UTG+1', 'UTG+2', 'UTG+3', 'LJ', 'HJ', 'CO', 'BTN'];
 final _stacks = List.generate(15, (i) => i + 1);
 
 DrillSpot generateRandomSpot() {
@@ -37,9 +37,17 @@ String _randomhand(Random rand) {
   // Checking suited or not
   final suited = rand.nextBool() ? 's' : 'o';
 
-  return '$r1$r2$suited';
+  // Makes it so the higher rank is always first
+  final hi = _rankValue(r1) > _rankValue(r2) ? r1 : r2;
+  final lo = hi == r1 ? r2 : r1;
+
+  return '$hi$lo$suited';
 }
 
+// Checks the value of a rank (high or low)
+int _rankValue(String r) => '23456789TJQKA'.indexOf(r);
+
+// Function to use an existing hand that the user has had trouble with
 DrillSpot useChallengingHand(Random rand) {
   if (failureDB.isEmpty) {
     return generateRandomSpot();
