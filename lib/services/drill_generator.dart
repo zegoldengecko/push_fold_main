@@ -68,9 +68,9 @@ DrillSpot convertToSpot(String key) {
   // split the key
   final parts = key.split('_');
 
-  final position = parts[1];
-  final stack = int.parse(parts[2]);
-  final hand = parts[3];
+  final position = parts[0];
+  final stack = int.parse(parts[1]);
+  final hand = parts[2];
 
   return DrillSpot(position: position, stack: stack, hand: hand);
 }
