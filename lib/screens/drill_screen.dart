@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:push_fold_main/services/drill_generator.dart';
 import 'package:push_fold_main/models/drill_spot.dart';
+import 'package:push_fold_main/data/gto_charts.dart';
+import 'package:push_fold_main/data/common_failures.dart';
 
 class DrillScreen extends StatefulWidget {
   const DrillScreen({super.key});
@@ -24,6 +26,18 @@ class _DrillScreenState extends State<DrillScreen> {
     });
   }
 
+  // Submitting the answer
+  void submitAnswer(bool pushed, DrillSpot spot) {
+    if (pushed && shouldShove(spot) || !pushed && !shouldShove(spot)) {
+      print('Correctly acted in spot ${spot.position} ${spot.stack} ${spot.hand}. They pushed: $pushed');
+    } else if (pushed && !shouldShove(spot) || !pushed && shouldShove(spot)) {
+      print('Incorrectly acted in spot ${spot.position} ${spot.stack} ${spot.hand}. They pushed: $pushed');
+      recordFailure(spot);
+    }
+
+    nextSpot();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +52,18 @@ class _DrillScreenState extends State<DrillScreen> {
               style: const TextStyle(fontSize: 40),
             ),
             const SizedBox(height: 20),
+
             ElevatedButton(
-              onPressed: nextSpot,
-              child: const Text('Next'),
-            )
+              onPressed: () => submitAnswer(true, spot),
+              child: const Text('Push'),
+            ),
+
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: () => submitAnswer(false, spot),
+              child: const Text('Fold'),
+            ),
           ],
         ),
       ),

@@ -11,6 +11,8 @@
 //   K5o+     K5o up to KQo
 //   87s      exact hand only (no +)
 
+import 'package:push_fold_main/models/drill_spot.dart';
+
 
 // ranking cards from lowest to highest and converting to a number
 const String _ranks = '23456789TJQKA';
@@ -66,8 +68,8 @@ List<String> _expandToken(String token) {
         result.add('$hi${_ranks[i]}o');
       }
     } else {
-      result.add('${hi}${lo}s');
-      result.add('${hi}${lo}o');
+      result.add('$hi${lo}s');
+      result.add('$hi${lo}o');
     }
     return result;
   }
@@ -86,12 +88,12 @@ List<String> parseRange(String range) {
 }
 
 /// Returns true if [hand] is a shove from [position] at [stackDepth] BB.
-bool shouldShove(String position, int stackDepth, String hand) {
-  final posMap = gtoCharts[position];
+bool shouldShove(DrillSpot spot) {
+  final posMap = gtoCharts[spot.position];
   if (posMap == null) return false;
-  final range = posMap[stackDepth];
+  final range = posMap[spot.stack];
   if (range == null) return false;
-  return parseRange(range).contains(hand);
+  return parseRange(range).contains(spot.hand);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
