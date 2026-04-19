@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   // 🖼️ YOUR IMAGE HERE
                   Image.asset(
-                    'assets/titel_royal_flush.png',
+                    '../assets/title_royal_flush.png',
                     width: 180,
                     fit: BoxFit.contain,
                   ),
