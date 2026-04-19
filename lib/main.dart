@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2E7D32), // grass green
+      backgroundColor: const Color(0xFF2E7D32),
       body: Column(
         children: [
           // Red banner
@@ -46,12 +46,20 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          // Buttons
           Expanded(
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // 🖼️ YOUR IMAGE HERE
+                  Image.asset(
+                    'assets/titel_royal_flush.png',
+                    width: 180,
+                    fit: BoxFit.contain,
+                  ),
+
+                  const SizedBox(height: 20),
+
                   _MenuButton(
                     title: "Practice",
                     onPressed: () {
@@ -63,6 +71,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
+
                   const SizedBox(height: 16),
                   const _MenuButton(title: "Learn"),
                   const SizedBox(height: 16),
